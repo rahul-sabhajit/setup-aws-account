@@ -1,0 +1,88 @@
+How to Install Apache, MySql, PHP & phpMyAdmin on Ubuntu 16 (LAMP Stack)
+
+Step 1 : Updating the Package List
+Update the package list on your system so that you can have the latest available versions of Apache, PHP, MySql and phpMyAdmin.
+sudo apt-get update
+
+Step 2 : Installing Apache
+Install Apache through the following command :
+sudo apt-get install apache2
+
+Note that it will install the latest available version of Apache (2.4 as of Jan, 2017).
+Step 3 : Checking Successful Installation of Apache
+You can check whether Apache has been installed by typing in the IP address of your server http://your-ip-address (or http://localhost if you're doing it on a local server). You should see a page like this :
+
+Step 4 : Installing MySql
+Install MySql through the following command :.
+sudo apt-get install mysql-server
+
+You will also be asked to enter the desired password of the MySql root account. Although it is optional, don't leave it. The default password of the root account is blank, and instead of changing it later on, better do it now.
+Type in a strong password and press the arrow-down button to highlight the Ok button. When highlighted the Ok button will turn red. Press the enter key to proceed.
+You will also be asked for a confirmation of the password. Repeat the same.
+The latest available version of MySql (5.7 as of Jan, 2017) will be installed.
+
+
+Step 5 : Checking Successful Installation of MySql
+Type the following command :
+mysql -u root -p
+If MySql has been installed successfully, you should be prompted for a password. Enter the password which you chose in the above step. You should see the MySql prompt like this :
+mysql> 
+Here you can run mysql queries, create tables etc.
+Now to go back, exit MySql by typing in the command :
+exit
+
+
+Step 6 : Installing PHP with Commonly Used Extensions
+Install PHP and commonly used extensions :
+sudo apt-get install php libapache2-mod-php php-mysql php-curl php-gd php-json php-mcrypt php-zip
+In the above command in addition to PHP, the following PHP extensions are also installed :
+    MySql Extension : To use MySql functions available in PHP
+    Curl Extension : To make CURL requests through PHP, commonly used in implementing API calls of web services
+    GD Extension : To enable the GD library. PHP uses GD library for image manipulation tasks
+    JSON Extension : To decode and encode JSON through PHP
+    Mcrypt Extension : Contains various encryption functions
+    Zip Extension : Zip and unzip through PHP
+
+PHP offers a lot more extensions, but these are the most commonly used. If required, you can install an extension later.
+Also note that libapache2-mod-php is the Apache Module to run PHP. This module provides the connection between Apache and PHP.
+The latest available version of PHP (7 as of Jan, 2017) will be installed.
+
+
+Step 7 : Checking Successful Installation of PHP
+Type the following command :
+echo "<?php phpinfo(); ?>" | sudo tee /var/www/html/phpinfo.php
+This will create a phpinfo.php file in the root directory. Type this url in the browser http://your-ip-address/phpinfo.php (or http://localhost/phpinfo.php if installing locally). You should see a page like this, showing your PHP configuration :
+
+Step 8 : Installing phpMyAdmin
+Install phpMyAdmin through the commannd :
+sudo apt-get install phpmyadmin
+You will be asked to choose the type of web server. The default choice would be apache2. Press space key to select. Now press Tab key to highlight the Ok button. Now press the enter key. Pressing key in this order is very important, otherwise apache2 will not be selected. When selected apache2 would have a * symbol beside it, see the second image how it would look like.
+You will then be asked whether to configure database for phpmyadmin with dbconfig-common. Choose Yes and click enter.
+You will then be asked to enter the password of MySql root account. Enter the password which you typed while installing MySql. Use the Tab key to highlight the Ok button and press enter.
+Do the same when asked for password confirmation.
+
+The latest available version of phpMyAdmin (4.5 as of Jan, 2017) will be installed.
+Step 9 : Checking Successful Installation of phpMyAdmin
+Visit the url http://your-ip-addrss/phpmyadmin (or http://localhost/phpmyadmin) in your browser. If phpMyAdmin is installed successfully, you should see the standard phpMyAdmin login page. Type in root as the username, and the MySql password you chose earlier to access the databases.
+
+
+Step 10 : Enable Apache Rewrite Module
+Enable the Rewrite Module in Apache, so that your application can make use of seo-friendly pretty URLs, such as http://website.com/posts/12/post-on-ubuntu/ (instead of http://website.com?post_id=12). Most probably you will be needing pretty URLs in future, better enable it now.
+sudo a2enmod rewrite
+
+Now restart Apache so that this change becomes live.
+sudo service apache2 restart
+
+That's it. You should have a fully functional LAMP stack. You can start writing your code now !
+
+
+For Removing phpmyadmin command
+sudo apt-get purge libapache2-mod-php5
+
+sudo apt-get install libapache2-mod-php5
+
+sudo apt-get purge phpmyadmin
+
+sudo apt-get install phpmyadmin
+
+sudo /etc/init.d/apache2 restart
